@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Egregii - web design, online marketing, SEO</title>
+
+        <style>
+            .hero_image {
+                width: 100%;
+            }
+            .hero_image .mask {
+                width: 2560px;
+                height: 1440px;
+                background: purple;
+                border-radius: 50px;
+                -webkit-clip-path: url(#hero_image-clip_path_2560);
+                clip-path: url(#hero_image-clip_path_2560);
+            }
+            .svg_clipped {
+                -webkit-clip-path: url(#hero_image-clip_path_2560);
+                clip-path: url(#hero_image-clip_path_2560);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="hero_image">
+            <div class="mask">
+
+            </div>
+        </div>
+        <img class="svg_clipped" src="https://www.sarasoueidan.com/demos/css-svg-clipping/html-img-clipped-with-css-svg-clippath/flowers.jpg">
+
+        <svg id="hero_image-clip_path_2560" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2561 1412.2">
+            <defs>
+                <!--<style>
+                    .hero_image-clip_path_2560 {
+                        fill: none;
+                        stroke: #000;
+                        stroke-miterlimit: 10;
+                    }
+                </style>
+                <title>hero_image-clip_path_2560</title>-->
+                <path fill="#FFFFFF" stroke="#000000" stroke-width="1.5794" stroke-miterlimit="10" d="M0,0V469.1l868.8,868.8a249.7,249.7,0,0,0,241.5,64.7L2560,1014.2V0Z" transform="translate(0.5 0.5)"/>
+            </defs>
+        </svg>
+    </body>
+</html>

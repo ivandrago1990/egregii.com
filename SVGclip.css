@@ -1,0 +1,48 @@
+div[class*='--SVGclip-wrap'] {    /* Use: --SVGclip-wrap-cover / --SVGclip-wrap-contain */
+    --clipDIV-W: 100vw;    /*EDIT this*/
+    --clipDIV-H: 800px;    /*EDIT this*/
+    --clipSVG-W: 101;                                              /* width  of .SVG in px */
+    --clipSVG-H: 300.2;                                            /* height of .SVG in px */
+    --clipSVG-ratio: calc(var(--clipSVG-W) / var(--clipSVG-H));    /* ratio = width / height */
+    --clip-minW: calc(var(--clipDIV-H) * var(--clipSVG-ratio));
+    --clip-minH: calc(var(--clipDIV-W) / var(--clipSVG-ratio));
+
+    width:  var(--clipDIV-W);
+    height: var(--clipDIV-H);
+
+    position: relative;
+    overflow: hidden;    /*WARNING: maknuti ovo? */
+}
+div.--SVGclip-wrap-cover {
+    --clip-W: max(var(--clipDIV-W), var(--clip-minW));    /* final calculated width  of .SVGclip */
+    --clip-H: max(var(--clipDIV-H), var(--clip-minH));    /* final calculated height of .SVGclip */
+}
+div.--SVGclip-wrap-contain {
+    --clip-W: min(var(--clipDIV-W), var(--clip-minW));    /* final calculated width  of .SVGclip */
+    --clip-H: min(var(--clipDIV-H), var(--clip-minH));    /* final calculated height of .SVGclip */
+}
+.--SVGclip {
+    -webkit-clip-path: url(#hero_image-clip_path_100);    /*EDIT this*/
+    clip-path: url(#hero_image-clip_path_100);            /*EDIT this*/
+    overflow: hidden;
+    
+    width:  var(--clip-W);
+    height: var(--clip-H);
+
+    position: absolute;
+    bottom: 0;    /*default value*/
+    /*left: 0;      /*default value*/
+    left: calc(
+        0px - ( var(--clip-W) - var(--clipDIV-W) ) / 2
+    );        /* keep .SVGclip centered in .SVGclip-wrap */
+}
+.--SVGclip-content {
+    width:  var(--clipDIV-W);
+    height: var(--clipDIV-H);
+    position: absolute;
+    bottom: 0;    /*default value*/
+    /*left: 0;      /*default value*/
+    left: calc(
+        0px + ( var(--clip-W) - var(--clipDIV-W) ) / 2
+    );    /* keep .SVGclip-content centered in .SVGclip */
+}
