@@ -1,0 +1,39 @@
+/* simple word rotator: https://codepen.io/joshmath/pen/NrPBBz */
+.--rotator-wrap {
+    --word-count: 6;
+    --word-time: 3s;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+}
+.--rotator-wrap p {
+    margin: 0;
+}
+.--rotator-words {
+    display: inline-block;
+    text-align: left;
+}
+.--rotator-words > span {
+    position: absolute;
+    top: 0;
+    opacity: 0;    
+    animation: rotateWords calc(var(--word-time) * var(--word-count)) linear infinite 0s;
+}
+.--rotator-words span:nth-child(2) { animation-delay: calc(var(--word-time) * 1); }
+.--rotator-words span:nth-child(3) { animation-delay: calc(var(--word-time) * 2); }
+.--rotator-words span:nth-child(4) { animation-delay: calc(var(--word-time) * 3); }
+.--rotator-words span:nth-child(5) { animation-delay: calc(var(--word-time) * 4); }
+.--rotator-words span:nth-child(6) { animation-delay: calc(var(--word-time) * 5); }
+.--rotator-words span:nth-child(7) { animation-delay: calc(var(--word-time) * 6); }
+.--rotator-words span:nth-child(8) { animation-delay: calc(var(--word-time) * 7); }
+.--rotator-words span:nth-child(9) { animation-delay: calc(var(--word-time) * 8); }
+@keyframes rotateWords {
+    0%   { opacity: 0; }
+    2%   { opacity: 0; transform: translateY(-30px); }
+    5%   { opacity: 1; transform: translateY(0px); }
+    17%  { opacity: 1; transform: translateY(0px); }    /* set this to: 100% / var(--word-count) */
+    20%  { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 0; }
+}

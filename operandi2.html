@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>CSS &amp; SVG Clipping Demo #3</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Google fonts: EB Garamond, Montserrat, Roboto -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap" rel="stylesheet">
+
+        <!-- Google Material icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/694b977bfe.js" crossorigin="anonymous"></script>
+
+        <!-- custom CSS -->
+        <link rel="stylesheet" href="SVGclip.css">
+        <link rel="stylesheet" href="wordRotator.css">
+
+        <style>
+            :root {
+                --logo-stroke-width: 1;
+                --logo-fill-color: white;
+                --logo-animation-duration: 4s;
+            }
+            body {
+                margin: 0;
+            }
+
+
+
+            .HERO_CONTENT {
+                color: white;
+                font-family: 'Roboto';
+
+                background: 
+                    linear-gradient(#4500CA 4%, rgba(69,0,202,0) 50%),
+                    linear-gradient(45deg, #28005f 16%, rgba(40,0,95,0) 64%), 
+                    linear-gradient(60deg, /*#28005f 16%,*/ #8300e5 64%, #0f3bff 100%);
+            }
+            .HERO_BLUEGRAD_OVERLAY {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                background: linear-gradient(180deg, rgb(69,12,199) 10%, rgba(69,12,199, 0) 35%);
+            }
+
+
+
+            .HERO_WRAP .blobs {
+                width: 30%;
+                height: 100%;
+                position: absolute;
+                right: 0;
+                top: 5rem;
+                isolation: isolate;
+            }
+            .HERO_WRAP .blobs .solid,
+            .HERO_WRAP .blobs .blended {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                right: 0;
+                top: 0;
+                isolation: isolate;
+            }
+            .HERO_WRAP .blobs .solid {
+                opacity: 0.9;
+                filter: drop-shadow(-10px 25px 50px rgba(150, 50, 0, 0.7));
+            }
+            .HERO_WRAP .blob {
+                position: absolute;
+            }
+            .HERO_WRAP .blobs .solid .blob {
+                filter: drop-shadow(-5px 5px 10px rgba(130, 0, 0, 0.7));
+            }
+            .HERO_WRAP .blobs .blended .blob {
+                mix-blend-mode: color-dodge;
+                opacity: 0.7;
+            }
+            .HERO_WRAP .blob1 {
+                width: 120%;
+                left: 22%;
+                top: 2%;
+            }
+            .HERO_WRAP .blob2 {
+                width: 64%;
+                left: 0%;
+                top: 20%;
+            }
+            .HERO_WRAP .blob3 {
+                width: 50%;
+                left: 75%;
+                top: 0%;
+            }
+
+            .HERO_WRAP .HERO_BLOB_OUTSIDEBOX {
+                position: absolute;
+                right: 8rem;
+                bottom: 9rem;
+                width: 10rem;
+                height: 10rem;
+                
+                opacity: 0.95;
+                filter: drop-shadow(-15px 10px 25px rgba(150, 50, 0, 0.7));
+            }
+            .HERO_WRAP .HERO_BLOB_OUTSIDEBOX .blob {
+                filter: drop-shadow(-5px 5px 10px rgba(130, 0, 0, 0.6));
+            }
+            .HERO_WRAP .HERO_BLOB_OUTSIDEBOX .blob_reflection {
+                position: absolute;
+                rotate: -41deg;
+                top: 6%;
+                left: 72%;
+
+                shape-outside: ellipse(40% 50% at left);
+                border-radius: 50%;
+                width: 10%;
+                height: 36%;
+                background: rgb(255,200,50);
+                filter: blur(7px);
+            }
+
+
+            
+            .HERO_GRID {
+                position: relative;
+                width: 100%;
+                max-width: 800px;
+                margin: 15vh auto 0;
+                padding: 1rem;
+
+                display: grid;
+                grid-template-columns: 12rem auto;
+                column-gap: 2rem;
+            }
+
+            #logo {
+                width: 100%;
+            }
+            #logo svg {
+                width: 100%;
+                display: block;
+                margin: auto;
+                /* SVG shadows: https://css-tricks.com/adding-shadows-to-svg-icons-with-css-and-svg-filters/ */
+                filter: drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.5));
+            }
+            
+            /* SVG animation: https://www.toptal.com/front-end/svg-animation-guide */
+            #logo svg path {
+                stroke: var(--logo-fill-color);
+                stroke-width: 0;
+                stroke-dasharray: 100;
+                stroke-dashoffset: 0;
+                fill: var(--logo-fill-color);
+                animation: dash 5s ease-in-out;
+                animation-fill-mode: both;
+            }
+            #logo svg path.p1 { animation-duration: 8s; }
+            #logo svg path.p8, #logo svg path.p10 { animation-duration: 7s; }
+            /*.p8 { animation-delay: 0s !important; }*/
+            .p10 { animation-delay: 0.5s !important; }
+            .p5, .p6, .p7 { animation-delay: 1s !important; }
+            .p4 { animation-delay: 1.3s !important; }
+            .p11 { animation-delay: 1.6s !important; }
+            .p3 { animation-delay: 2s !important; }
+            .p9 { animation-delay: 2.3s !important; }
+            .p2 { animation-delay: 2.6s !important; }
+            @keyframes dash {
+                0% { 
+                    stroke-width: 0;
+                    stroke-dashoffset: 100; 
+                    fill: rgba(0,0,0,0); 
+                }
+                40% { 
+                    stroke-width: var(--logo-stroke-width);
+                    fill: rgba(0,0,0,0); 
+                }
+                100% { 
+                    stroke-width: 0;
+                    stroke-dashoffset: 0; 
+                    fill: var(--logo-fill-color); 
+                }
+            }
+
+
+
+            .slide-in-blurred-top {
+                -webkit-animation: slide-in-blurred-top 3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+                        animation: slide-in-blurred-top 3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+                -webkit-animation-delay: 1s;
+                        animation-delay: 1s;
+            }
+            @-webkit-keyframes slide-in-blurred-top {
+                0% {
+                    -webkit-transform: translateY(-20px);
+                            transform: translateY(-20px);
+                    -webkit-filter: blur(40px);
+                            filter: blur(40px);
+                    opacity: 0;
+                }
+                100% {
+                    -webkit-transform: translateY(0);
+                            transform: translateY(0);
+                    -webkit-filter: blur(0);
+                            filter: blur(0);
+                    opacity: 1;
+                }
+            }
+            @keyframes slide-in-blurred-top {
+                0% {
+                    -webkit-transform: translateY(-20px);
+                            transform: translateY(-20px);
+                    -webkit-filter: blur(40px);
+                            filter: blur(40px);
+                    opacity: 0;
+                }
+                100% {
+                    -webkit-transform: translateY(0);
+                            transform: translateY(0);
+                    -webkit-filter: blur(0);
+                            filter: blur(0);
+                    opacity: 1;
+                }
+            }
+
+            
+
+            .HERO_CONTENT h1 {
+                font-size: 1.5rem;
+                margin-top: 0;
+            }
+            .HERO_CONTENT a.button {
+                position: relative;
+                top: 0;
+                display: inline-block;
+                margin-top: 1rem;
+                padding: 16px 48px;
+
+                background: linear-gradient(to left, rgba(236, 146, 19, 0.3) 5%, rgba(185, 29, 55, 0.5) 100%);
+                z-index: 1; /* matters! */
+                overflow: hidden;
+                
+                border-radius: 50px;
+                cursor: pointer;
+                color: white;
+                font-weight: bold;
+                text-decoration: none;
+
+                transition: all 1.5s;
+            }
+            /* transition on CSS:   background: linear-gradient(...) 
+                https://css-tricks.com/transitioning-gradients/ */
+            .HERO_CONTENT a.button::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(to left, rgba(236, 146, 19, 1) 5%, rgba(185, 29, 55, 1) 100%);
+                opacity: 0;
+                transition: opacity 1.5s;
+                z-index: -1;
+            }
+            .HERO_CONTENT a.button:hover {
+                top: -6px;
+                box-shadow: 0 10px 20px rgba(120, 0, 50, 0.6);
+            }
+            .HERO_CONTENT a.button:hover::before {
+                opacity: 1;
+            }
+
+
+
+            .WORD_ROTATOR {
+                margin-top: 20px;
+                text-transform: uppercase;
+                font-family: 'Roboto', sans-serif;
+                font-size: 2.5rem;
+                font-weight: 600;
+            }
+            .--rotator-words > span {
+                -webkit-text-stroke: 1.5px white;
+                -webkit-text-fill-color: transparent;
+                font-weight: 900;
+                letter-spacing: 2px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="HERO_WRAP --SVGclip-wrap-cover">
+            <div class="--SVGclip">
+                <div class="HERO_CONTENT --SVGclip-content">
+                    <div class="blobs">
+                        <div class="solid">
+                            <div class="blob blob1">
+                                <svg viewBox="0 0 150.1 178.7" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Blob CSS generator: https://www.blobmaker.app/ -->
+                                    <path fill="url(#blob1_gradient)" d="M65.7,15.1c18.8-7.2,41.2-5.7,56.6,5s23.4,30.6,32.2,48,18.2,32.3,22.1,50.4,2,39.3-9.1,52.8S136,190.8,118.4,189,86,178.1,71.5,171.3s-28.9-11-33.4-20.7,1-24.4-.9-41.5S25.9,72.9,28.8,55.4,46.9,22.2,65.7,15.1Z" transform="translate(-28.3 -10.7)" />
+                                    <defs>
+                                        <linearGradient id="blob1_gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                                            <stop offset="15%" stop-color="#b91d37" />
+                                            <stop offset="80%" stop-color="#ec9213" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div class="blob blob2">
+                                <svg viewBox="0 0 147.6 190.2" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill="url(#blob1_gradient)" d="M104.4,171.3c-6.1-9.4-8.3-19-23.7-31.8S36.2,110.4,28.5,90.6,33.9,47.3,53.7,30,99.4,1.9,121.9,6.7,163.7,32,170.5,53s1.4,42.6-.9,57.6-1.5,23.4.3,36.3,4.8,30.1-1.7,39.7-22.1,11-35,7.2S110.5,180.8,104.4,171.3Z" transform="translate(-26.2 -5.5)" />
+                                </svg>
+                            </div>
+                            <div class="blob blob3">
+                                <svg viewBox="0 0 135.7 188.7" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill="url(#blob1_gradient)" d="M38.8,117.1c-2.3-15-8.1-26.4-8.9-39.2s3.5-27.5,12.9-42.8S66.3,4.1,80.6,4.7,109,22.2,119.2,36.5s16.3,26,24.9,39.3,19.7,28.1,21.3,44.6-6.4,34.9-20,49.1S112.6,193.8,94,193.3s-36.8-11.7-45.3-26.8S41.2,132.3,38.8,117.1Z" transform="translate(-29.9 -4.6)" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="blended">
+                            <div class="blob blob1">
+                                <svg viewBox="0 0 150.1 178.7" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill="url(#blob1_gradient)" d="M65.7,15.1c18.8-7.2,41.2-5.7,56.6,5s23.4,30.6,32.2,48,18.2,32.3,22.1,50.4,2,39.3-9.1,52.8S136,190.8,118.4,189,86,178.1,71.5,171.3s-28.9-11-33.4-20.7,1-24.4-.9-41.5S25.9,72.9,28.8,55.4,46.9,22.2,65.7,15.1Z" transform="translate(-28.3 -10.7)" />
+                                </svg>
+                            </div>
+                            <div class="blob blob2">
+                                <svg viewBox="0 0 147.6 190.2" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill="url(#blob1_gradient)" d="M104.4,171.3c-6.1-9.4-8.3-19-23.7-31.8S36.2,110.4,28.5,90.6,33.9,47.3,53.7,30,99.4,1.9,121.9,6.7,163.7,32,170.5,53s1.4,42.6-.9,57.6-1.5,23.4.3,36.3,4.8,30.1-1.7,39.7-22.1,11-35,7.2S110.5,180.8,104.4,171.3Z" transform="translate(-26.2 -5.5)" />
+                                </svg>
+                            </div>
+                            <div class="blob blob3">
+                                <svg viewBox="0 0 135.7 188.7" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill="url(#blob4_gradient)" d="M38.8,117.1c-2.3-15-8.1-26.4-8.9-39.2s3.5-27.5,12.9-42.8S66.3,4.1,80.6,4.7,109,22.2,119.2,36.5s16.3,26,24.9,39.3,19.7,28.1,21.3,44.6-6.4,34.9-20,49.1S112.6,193.8,94,193.3s-36.8-11.7-45.3-26.8S41.2,132.3,38.8,117.1Z" transform="translate(-29.9 -4.6)" />
+                                    <defs>
+                                        <linearGradient id="blob4_gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                                            <stop offset="35%" stop-color="#b91d37" />
+                                            <stop offset="80%" stop-color="#ec9213" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="HERO_BLUEGRAD_OVERLAY"></div>
+
+                    <div class="HERO_GRID">
+                        <div class="HERO_GRID-col1">
+                            <div id="logo" class="HERO_WRAP-logo">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190.6 190.6">
+                                    <path class="p1 letter-border" pathLength="180"
+                                    d="M205.6,184.2V374.8H396.2V184.2ZM389.3,368H212.4V191.1H389.3Z" transform="translate(-205.6 -184.2)"/>
+                                    <path class="p2 letter-m" pathLength="100"
+                                    d="M341,358l-.7-.2a.6.6,0,0,1-.3-.6.7.7,0,0,1,.4-.6l.7-.4,1.3-.6c.4-.2.6-.6.6-1.3V342.7a4.3,4.3,0,0,0-.3-1.7,1.4,1.4,0,0,0-1.2-.9l-.4-.3a1,1,0,0,1-.2-.7.8.8,0,0,1,.6-.9l2.7-.7,2.9-.9a14.5,14.5,0,0,0,2.4-1l.3-.2h.3c.4,0,.5.2.5.6a7.2,7.2,0,0,1-.1,1.3,9.7,9.7,0,0,0-.1,1.6c0,.4,0,.6.1.6h.1a15.6,15.6,0,0,1,3.4-2.5,8.6,8.6,0,0,1,3.9-.9,4.4,4.4,0,0,1,2.9,1.2,6.7,6.7,0,0,1,1.9,2.8h.2a11.1,11.1,0,0,1,3.3-2.9,8.8,8.8,0,0,1,4.2-1.1,4.7,4.7,0,0,1,2.8.9,6.1,6.1,0,0,1,2.1,2.4,9.4,9.4,0,0,1,.7,3.9v11.1c0,.7.2,1.1.6,1.3l1.3.6.7.4a.9.9,0,0,1,.3.6.6.6,0,0,1-.3.6l-.6.2H367.4l-.5-.2a.6.6,0,0,1-.3-.6.9.9,0,0,1,.3-.6l.7-.4a1.9,1.9,0,0,0,.9-.5,1.3,1.3,0,0,0,.3-1V344.5a6.6,6.6,0,0,0-.3-2.1,2.8,2.8,0,0,0-.9-1.4,2.1,2.1,0,0,0-1.3-.5l-1.2.3a5.5,5.5,0,0,0-1.4.9,2.1,2.1,0,0,0-.6,1.7v10.9a1.9,1.9,0,0,0,.3,1.3l1.1.6.7.4a.9.9,0,0,1,.3.6.6.6,0,0,1-.3.6l-.6.2H354.5l-.5-.2a.6.6,0,0,1-.3-.6.9.9,0,0,1,.3-.6l.7-.4a1.9,1.9,0,0,0,.9-.5,1.3,1.3,0,0,0,.3-1V344.5a6.6,6.6,0,0,0-.3-2.1,2.5,2.5,0,0,0-.9-1.3,1.9,1.9,0,0,0-1.3-.5l-1.2.2-1.5.8a2.2,2.2,0,0,0-.5,1.6v11.1a2.3,2.3,0,0,0,.3,1.3,1.7,1.7,0,0,0,.9.6l.7.4a.8.8,0,0,1,0,1.2l-.5.2H341Z" transform="translate(-205.6 -184.2)"/>
+                                    <path class="p3 letter-o" pathLength="100"
+                                    d="M327.6,358.5a11.4,11.4,0,0,1-5.5-1.3,10.2,10.2,0,0,1-5.3-9.2,11.8,11.8,0,0,1,.9-4.6,11.6,11.6,0,0,1,2.6-3.9,12.8,12.8,0,0,1,3.8-2.6,11.8,11.8,0,0,1,4.6-.9,12,12,0,0,1,5.7,1.4,11.5,11.5,0,0,1,4,3.9,9.5,9.5,0,0,1,1.5,5.2,13.2,13.2,0,0,1-1.3,6,10.2,10.2,0,0,1-4.1,4.4A13.1,13.1,0,0,1,327.6,358.5Zm1-2.3a2.4,2.4,0,0,0,1.5-.4,2.3,2.3,0,0,0,1.1-1.1,7.1,7.1,0,0,0,.9-2.7,27.5,27.5,0,0,0,.2-4.3,18.5,18.5,0,0,0-.5-4.9,10.2,10.2,0,0,0-1.5-3.3,2.9,2.9,0,0,0-2.3-1.2,2.7,2.7,0,0,0-1.2.3,2.1,2.1,0,0,0-1,.6,5.6,5.6,0,0,0-1.1,2.8,28.4,28.4,0,0,0-.4,4.7,17.6,17.6,0,0,0,.6,4.6,12.7,12.7,0,0,0,1.5,3.5A2.9,2.9,0,0,0,328.6,356.2Z" transform="translate(-205.6 -184.2)"/>
+                                    <path class="p4 letter-c" pathLength="100"
+                                    d="M306.2,358.5a8,8,0,0,1-4.8-1.4,11,11,0,0,1-3.5-3.9,12.8,12.8,0,0,1-1.2-5.6,11.8,11.8,0,0,1,1.5-5.9,11.5,11.5,0,0,1,4.1-4.1A11.1,11.1,0,0,1,308,336a9.6,9.6,0,0,1,7.1,2.9,2.3,2.3,0,0,1,.3.9,1.6,1.6,0,0,1-.4.9,5.2,5.2,0,0,1-1,1.1,1.5,1.5,0,0,1-1.9.1l-.9-.6a10.6,10.6,0,0,0-2.7-1.8,4.6,4.6,0,0,0-2.3-.7,2.9,2.9,0,0,0-2.6,1.4c-.6,1-.8,2.6-.8,5a13.3,13.3,0,0,0,.6,4.2,5.4,5.4,0,0,0,2.2,2.7,5.9,5.9,0,0,0,3.4.9,6.7,6.7,0,0,0,2.6-.5,7.9,7.9,0,0,0,2.3-1.4l.5-.4h.5c.4,0,.5.3.5.8v.5a2.4,2.4,0,0,1-.2.8,8.3,8.3,0,0,1-1.8,2.4,12.8,12.8,0,0,1-3.1,2.4A8,8,0,0,1,306.2,358.5Z" transform="translate(-205.6 -184.2)"/>
+                                    <path class="p5 letter-dot" pathLength="100"
+                                    d="M291.8,359.5a4.1,4.1,0,0,1-3-1.2,4.2,4.2,0,0,1-1.3-3.1,4,4,0,0,1,1.3-3.1,3.8,3.8,0,0,1,3-1.3,4.2,4.2,0,0,1,3.2,1.3,4.4,4.4,0,0,1,1.3,3.1,4.3,4.3,0,0,1-4.5,4.3Z" transform="translate(-205.6 -184.2)"/>
+                                    <path class="p6 letter-i-dot-right" pathLength="100"
+                                    d="M373.9,262.5a5.9,5.9,0,0,1-1.7,4.2,5.8,5.8,0,0,1-4.3,1.8,6,6,0,0,1-6.1-6,6,6,0,0,1,1.7-4.4,5.9,5.9,0,0,1,4.4-1.8,5.8,5.8,0,0,1,4.3,1.8A6,6,0,0,1,373.9,262.5Z" transform="translate(-205.6 -184.2)"/>
+                                    <path class="p7 letter-i-dot-left" pathLength="100"
+                                    d="M349.8,262.5a5.6,5.6,0,0,1-1.8,4.2,5.7,5.7,0,0,1-4.3,1.8,5.8,5.8,0,0,1-4.3-1.8,5.5,5.5,0,0,1-1.7-4.2,5.7,5.7,0,0,1,1.7-4.4,5.8,5.8,0,0,1,4.3-1.8,5.7,5.7,0,0,1,4.3,1.8A5.7,5.7,0,0,1,349.8,262.5Z" transform="translate(-205.6 -184.2)"/>
+                                    <path class="p8 letter-gii" pathLength="100"
+                                    d="M379.9,323.4a1,1,0,0,1-.7,1,4,4,0,0,1-1.7.3l-3.7-.2-2.7-.3-3-.2H343.7l-2.9.2-3,.3-3.7.2a4.8,4.8,0,0,1-1.8-.3,1.1,1.1,0,0,1-.6-1,1.4,1.4,0,0,1,.9-1.4l1.8-.6a12.2,12.2,0,0,0,3.9-1.5,3.6,3.6,0,0,0,1.3-3V292.4a12.9,12.9,0,0,0-1.2-5.7,4.9,4.9,0,0,0-4.2-3l-1.2-.2h-7.4c-2.1,0-3.3.3-3.6,1a5,5,0,0,1-.3,1.4l-.3,1.9c0,.8-.1,1.5-.1,2.2a25.4,25.4,0,0,1-2.6,11.3,23.7,23.7,0,0,1-7,8.3,16.1,16.1,0,0,1-9.5,3.1,17.7,17.7,0,0,1-6.4-1.2,14.8,14.8,0,0,0-3.2,2.1c-1.2,1.1-1.7,2-1.7,2.9a3.7,3.7,0,0,0,1.7,3,14.8,14.8,0,0,0,5.3,1.9,57.2,57.2,0,0,0,8.5,1.1q11.1.6,16.5,3.6t5.4,7.8H328a10.7,10.7,0,0,0-4.7,1,8.7,8.7,0,0,0-2.6,1.6,6.3,6.3,0,0,0-1.6-2.4,13.1,13.1,0,0,0-5.8-2.8,58.5,58.5,0,0,0-10.3-1.5l-5.1-.5a27.8,27.8,0,0,0-7.2,6.5,14.6,14.6,0,0,0-2.3,8.2,9.7,9.7,0,0,0,1.4,5,6.5,6.5,0,0,0-4.6,6.1c0,.4.1.8.1,1.2-3.9-2.6-5.9-6.1-5.9-10.5a13.9,13.9,0,0,1,1-5.3,8.8,8.8,0,0,1,3-3.7l4.5-3.7,5.6-4.4a22.8,22.8,0,0,1-6.2-1.9,7,7,0,0,1-4.4-6.7,3.6,3.6,0,0,1,.7-2.2,8.4,8.4,0,0,1,2.1-2.2l4.1-3.2,1.9-1.7.7-.9a23.1,23.1,0,0,1-6.8-6.4,15.8,15.8,0,0,1-2.8-9.1,17.7,17.7,0,0,1,2.9-9.9l.6-.7.3.2a18.9,18.9,0,0,0,6.1,2.7,16.1,16.1,0,0,0-1.3,6.3,19.3,19.3,0,0,0,1.6,7.7,13.7,13.7,0,0,0,4.2,5.7,9.2,9.2,0,0,0,5.8,2.1c3,0,5.5-1.6,7.5-4.6a20.7,20.7,0,0,0,3-11.5,13.3,13.3,0,0,0-1.6-6.5,14.8,14.8,0,0,0-4.2-5,9.6,9.6,0,0,0-5.6-1.8h-.2a17.6,17.6,0,0,1-5.6-2.4,23,23,0,0,1,7.4-1.2,18,18,0,0,1,6,.9l5.2,1.6a22.1,22.1,0,0,0,4.5,1l3.5.2h3.7l4.4-.2,2.7-.2a26.3,26.3,0,0,0,8.3-2.8,50.6,50.6,0,0,0,4.7-3,2.8,2.8,0,0,1,1.7-.9c.4,0,.7.2.7.6s-.1,1.9-.3,3.8-.4,4-.6,6.3-.2,4.3-.2,6.1v27a3.2,3.2,0,0,0,1.4,3,11.7,11.7,0,0,0,3.7,1.6,23.5,23.5,0,0,0,5.3,0,15.5,15.5,0,0,0,3.8-1.6,3.4,3.4,0,0,0,1.4-3V289c0-1.8-.1-3.9-.3-6.1s-.3-4.4-.5-6.3-.3-3.1-.3-3.8.2-.6.7-.6a3.1,3.1,0,0,1,1.7.9,39.8,39.8,0,0,0,4.7,3,25.1,25.1,0,0,0,7.9,3c.7.1,1.1.5,1.1,1.4a1.6,1.6,0,0,1-.3,1.1,1.9,1.9,0,0,1-.9.5,5.2,5.2,0,0,0-4.3,3,14.8,14.8,0,0,0-1.1,5.7v26.1a3.3,3.3,0,0,0,1.3,3,12.5,12.5,0,0,0,3.8,1.5l1.9.6A1.4,1.4,0,0,1,379.9,323.4Z" transform="translate(-205.6 -184.2)"/>
+                                    <path class="p9 letter-e" pathLength="100"
+                                    d="M250.4,359.2a25.6,25.6,0,0,1-14.4-4,27.3,27.3,0,0,1-9.6-11.5,40.6,40.6,0,0,1-3.5-17.2,32.2,32.2,0,0,1,4-15.8,32.6,32.6,0,0,1,10.6-11.5,25.6,25.6,0,0,1,14.4-4.3,22.7,22.7,0,0,1,10.6,2.4,18,18,0,0,1,7.3,6.6,18.3,18.3,0,0,1,2.6,9.9c0,3.1-1.5,4.6-4.5,4.6H236.3a3.4,3.4,0,0,0-2.9,1.1q-.9,1.2-.9,4.5a27.6,27.6,0,0,0,3.2,13.1,25.5,25.5,0,0,0,8.4,9.4,19.8,19.8,0,0,0,11.5,3.6,19,19,0,0,0,14.7-6.8l.9-1,.8-.2q1.2,0,1.2,1.5t-2.7,6.3a23.5,23.5,0,0,1-5.4,5,27.2,27.2,0,0,1-6.9,3.2A28.8,28.8,0,0,1,250.4,359.2Zm-13.8-45.4h13.6l6.2-.2a38.6,38.6,0,0,0,4.9-.6,1.2,1.2,0,0,0,1-1,7.2,7.2,0,0,0,.2-2.3,9,9,0,0,0-3.8-7.4,13.8,13.8,0,0,0-9.1-3.1,14,14,0,0,0-6.9,2,20.1,20.1,0,0,0-5.7,5.1,9.9,9.9,0,0,0-2.2,6Q234.8,313.8,236.6,313.8Z" transform="translate(-205.6 -184.2)"/>
+                                    <path class="p10 letter-gr" pathLength="100"
+                                    d="M376.2,202.4a7.3,7.3,0,0,0-4.1-1,12.5,12.5,0,0,0-4.8,1,30.7,30.7,0,0,0-4.8,2.9,20,20,0,0,0-4.2,4.2c-.2,0-.3-.1-.3-.2s.2-4,.2-5.3.1-2.4.1-3.4a15.3,15.3,0,0,0,.1-1.8c0-.5-.2-.8-.6-.8a1.1,1.1,0,0,0-.7.2l-1.1.6-5.3,3.1a36.1,36.1,0,0,1-6.6,2.8l-1.1.2h-2.7l-15.4.2-3.4-.2a21.5,21.5,0,0,1-4.6-1l-5.1-1.6a18.2,18.2,0,0,0-6.1-.9,22.5,22.5,0,0,0-10.2,2.4,20.6,20.6,0,0,0-7.7,6.6,16.9,16.9,0,0,0-2.9,9.9,15.8,15.8,0,0,0,2.8,9.1,20.8,20.8,0,0,0,6.8,6.4l-.7.9-2,1.7-4.1,3.2a13.9,13.9,0,0,0-2.1,2.2,4.3,4.3,0,0,0-.6,2.2,6.9,6.9,0,0,0,4.4,6.7,20.7,20.7,0,0,0,6.2,1.9l-5.6,4.4-4.5,3.7a8.8,8.8,0,0,0-3,3.7,12.2,12.2,0,0,0-1,5.3c0,4.4,2,7.9,5.9,10.5s9.4,3.9,16.2,3.9a18.7,18.7,0,0,0,5.7-.8,12.6,12.6,0,0,0-3.1-3,9.5,9.5,0,0,0-1.7-1h0a15.8,15.8,0,0,1-9.7-3.3,9.8,9.8,0,0,1-4.3-8.1,14.6,14.6,0,0,1,2.3-8.2,25.4,25.4,0,0,1,7.1-6.4l5.1.4a55.7,55.7,0,0,1,10.3,1.5,13.5,13.5,0,0,1,5.9,2.8,5.9,5.9,0,0,1,1.8,4.4,17,17,0,0,1-1.7,7.7,15.6,15.6,0,0,1-3.2,4.7l1.6.2,2.9.2a32.4,32.4,0,0,0,5.4-7.5,19,19,0,0,0,2.3-9.2c0-3.6-1.8-6.5-5.4-8.5s-9-3.2-16.4-3.6a55.4,55.4,0,0,1-8.5-1.1,14.1,14.1,0,0,1-5.3-1.9,3.8,3.8,0,0,1-1.8-3c0-.9.6-1.8,1.8-2.9a14.8,14.8,0,0,1,3.2-2.1,17.3,17.3,0,0,0,6.4,1.2,16.6,16.6,0,0,0,9.5-3.1,22.5,22.5,0,0,0,6.9-8.3,24.2,24.2,0,0,0,2.7-11.3,17,17,0,0,1,.1-2.2l.3-1.9a10.6,10.6,0,0,1,.3-1.4c.2-.7,1.4-1,3.6-1h15l1.5.2a5,5,0,0,1,4,3,15.6,15.6,0,0,1,1,5.6v25.3a3.6,3.6,0,0,1-1.2,2.8,6.8,6.8,0,0,1-3.4,1.8l-2,.6a1.3,1.3,0,0,0-.8,1.3,1,1,0,0,0,.6,1,4.2,4.2,0,0,0,1.8.3l3.8-.2,2.7-.3H354a31.9,31.9,0,0,1,4.9.3,38.2,38.2,0,0,0,5.5.3c1.6,0,2.4-.4,2.4-1.3a1.1,1.1,0,0,0-.7-1.2,7.3,7.3,0,0,0-2.1-.7,23.1,23.1,0,0,1-4.6-2,2.9,2.9,0,0,1-1.7-2.6V219.4q0-6,2.7-8.1a9.4,9.4,0,0,1,5.6-2l1.9.3,1.9.8,1.8.7,1.6.3a3,3,0,0,0,2.2-1,9.3,9.3,0,0,0,1.8-2.6,6.5,6.5,0,0,0,.6-2.6A3.3,3.3,0,0,0,376.2,202.4Zm-63.6,27.5c-2,3-4.5,4.6-7.6,4.6a8.7,8.7,0,0,1-5.7-2.1,13.7,13.7,0,0,1-4.2-5.7,17.7,17.7,0,0,1-1.6-7.7,15.1,15.1,0,0,1,1.5-6.8,13.6,13.6,0,0,1,4-5.1,7.6,7.6,0,0,1,5.2-2,9.8,9.8,0,0,1,5.6,1.8,14.8,14.8,0,0,1,4.2,5,14.5,14.5,0,0,1,1.6,6.5A20.7,20.7,0,0,1,312.6,229.9Z" transform="translate(-205.6 -184.2)"/>
+                                    <path class="p11 letter-E" pathLength="100"
+                                    d="M222.6,282.9a9.3,9.3,0,0,1-2.6-.3,1.1,1.1,0,0,1-.9-1c0-1,1.3-1.7,3.9-2.2a13.4,13.4,0,0,0,6.8-2.8c1.4-1.2,2.1-3.3,2.1-6.2v-54c0-2.9-.6-4.9-1.7-6.1s-3.3-2.1-6.3-2.7a7.6,7.6,0,0,1-3-.9,1.7,1.7,0,0,1-1-1.5c0-.4.3-.8,1-1a8.5,8.5,0,0,1,2.5-.3h7.7l6.3.2h23.7l6.9-.2h3.3l1.3.3c.5.1.8.4.8.8l1.2,6.7a32.5,32.5,0,0,1,.6,5.7c0,.7-.1,1.2-.5,1.4a2.5,2.5,0,0,1-1.1.4,1.2,1.2,0,0,1-.9-.3l-.5-.9q-.6-2.1-1.2-3.9a5.6,5.6,0,0,0-1.4-2.7,8.1,8.1,0,0,0-3.7-2.6,15.5,15.5,0,0,0-4.3-.7H245.8a5.8,5.8,0,0,0-2.6,1.1,3.3,3.3,0,0,0-1.7,2.8v25.4a2.8,2.8,0,0,0,.7,1.9,1.8,1.8,0,0,0,1.5.7h11.9q3.4,0,4.8-1.2a10.4,10.4,0,0,0,2.1-4.6c.5-1.8,1.2-2.7,2.2-2.7a1.9,1.9,0,0,1,1,.5,1.6,1.6,0,0,1,.5,1.4v2.2c-.1,1.1-.1,2.3-.2,3.5s-.1,2.1-.1,2.7V245c.1,1.3.1,2.6.2,3.8v2.3a3,3,0,0,1-.2,1.4.8.8,0,0,1-.9.6c-1.2,0-2.1-1.2-2.7-3.8a9.8,9.8,0,0,0-1.9-4.1,4.5,4.5,0,0,0-3.6-1.3H245.6a8,8,0,0,0-3.1.5,3,3,0,0,0-1,2.6v23c0,3.1.7,5.2,1.9,6.3s3.3,1.8,6,1.8h8.9a38.2,38.2,0,0,0,6.4-.4,10.1,10.1,0,0,0,4.5-1.7,12.5,12.5,0,0,0,3.5-3.4c1-1.5,2.1-3.4,3.4-5.8a3.6,3.6,0,0,1,.8-1.2,1.5,1.5,0,0,1,1.1-.4,2.1,2.1,0,0,1,1,.6,1.8,1.8,0,0,1,.3,1.1,21,21,0,0,1-.6,3.8c-.4,1.8-.9,3.7-1.5,5.6a43.1,43.1,0,0,1-1.6,4.5,10.7,10.7,0,0,1-.7,1.5,1,1,0,0,1-1,.6H263.2l-9.3-.3-8.7-.2H231.8l-4,.4Z" transform="translate(-205.6 -184.2)"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="HERO_GRID-col2 slide-in-blurred-top">
+                            <h1>
+                                <span style="font-family: 'EB Garamond', serif; font-weight: bold; font-size: 130%;">Egregii</span>
+                                 is a Web Design & Online Marketing Agency
+                            </h1>
+                            <div class="WORD_ROTATOR --rotator-wrap">
+                                <p>We create 
+                                    <span class="--rotator-words">
+                                        <span>brand</span>
+                                        <span>visibility</span>
+                                        <span>responsive</span>
+                                        <span>recognition</span>
+                                        <span>funnels</span>
+                                        <span>with 
+                                            <i class="fa-solid fa-heart" 
+                                            style="
+                                                -webkit-text-stroke: 1px black;
+                                                -webkit-text-fill-color: red;
+                                                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+                                            "></i>
+                                        </span>
+                                    </span>
+                                </p>
+                            </div>
+                            <a href="./contact" class="button">CONTACT US!</a>
+                        </div>
+                    </div><!-- END .HERO_GRID -->
+                </div> <!-- END .HERO_CONTENT -->
+            </div><!-- END .--SVGclip -->
+
+            <div class="HERO_BLOB_OUTSIDEBOX">
+                <div class="blob blob4">
+                    <svg viewBox="0 0 126.7 165.8" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Blob CSS generator: https://www.blobmaker.app/ -->
+                        <path fill="url(#MyGradient)" d="M121.6,180c-12.6,7.6-31.6,2.9-38.3-11.4s-1.1-38.6-1.9-52.4S73.1,98.8,63.8,88,42.9,59.2,45,46.1,63.1,24.6,79.8,20.6s34-4,48.5,2.4,25.9,18.7,33.6,32.6,11.6,29.2,8.5,42.2-13.6,23.9-21.7,39.3S134.2,172.4,121.6,180Z" transform="translate(-44.8 -17.8)" />
+                        <defs>
+                            <linearGradient id="MyGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                                <stop offset="15%" stop-color="rgba(185,29,55, 0.8)" />
+                                <stop offset="70%" stop-color="rgba(236,146,19, 0.8)" />
+                                <stop offset="80%" stop-color="rgba(236,146,19, 1)" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="blob_reflection"></div>
+            </div>
+        </div><!-- END .HERO_WRAP -->
+        <svg xmlns="http://www.w3.org/2000/svg">
+            <clipPath id="hero_image-clip_path_100" clipPathUnits="objectBoundingBox">
+                <path d="M1,0.935,0.284,0.999 a0.069,0.023,0,0,1,-0.067,-0.006 L0,0.921 V0 H1"/>
+            </clipPath>
+        </svg>
+        <svg>
+            <clipPath id="hero_image-clip_path_2560" clipPathUnits="objectBoundingBox">
+                <!-- Turn absolute SVG path to relative: https://yoksel.github.io/relative-clip-path/ -->
+                <path d="M0,0 V0.332 l0.339,0.616 a0.098,0.177,0,0,0,0.094,0.046 L1,0.719 V0"/>
+            </clipPath>
+        </svg>
+    </body>
+</html>
