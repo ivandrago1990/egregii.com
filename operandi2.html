@@ -54,16 +54,40 @@
 
 
 
-            .HERO_WRAP .blobs {
-                width: 30%;
+            .HERO_WRAP .HERO_BLOBS_CONTAINER {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+            }
+            .HERO_WRAP .HERO_BLOBS_CONTAINER .HERO_BLOBS_CONTAINER_INNER {
+                width: 100%;
+                height: 100%;
+                max-width: 1200px;
+                margin: 0 auto;
+                position: relative;
+            }
+
+
+
+            .HERO_BLOBS_CONTAINER .blobs {
                 height: 100%;
                 position: absolute;
                 right: 0;
                 top: 5rem;
                 isolation: isolate;
             }
-            .HERO_WRAP .blobs .solid,
-            .HERO_WRAP .blobs .blended {
+            @media screen and (min-width: 1081px) {
+                .HERO_BLOBS_CONTAINER .blobs {
+                    width: 422px;
+                }
+            }
+            @media screen and (max-width: 1080px) {
+                .HERO_BLOBS_CONTAINER .blobs {
+                    width: 39vw;
+                }
+            }
+            .HERO_BLOBS_CONTAINER .blobs .solid,
+            .HERO_BLOBS_CONTAINER .blobs .blended {
                 width: 100%;
                 height: 100%;
                 position: absolute;
@@ -71,45 +95,77 @@
                 top: 0;
                 isolation: isolate;
             }
-            .HERO_WRAP .blobs .solid {
+            .HERO_BLOBS_CONTAINER .blobs .solid {
                 opacity: 0.9;
                 filter: drop-shadow(-10px 25px 50px rgba(150, 50, 0, 0.7));
             }
-            .HERO_WRAP .blob {
+            .HERO_BLOBS_CONTAINER .blob {
                 position: absolute;
             }
-            .HERO_WRAP .blobs .solid .blob {
+            .HERO_BLOBS_CONTAINER .blobs .solid .blob {
                 filter: drop-shadow(-5px 5px 10px rgba(130, 0, 0, 0.7));
             }
-            .HERO_WRAP .blobs .blended .blob {
+            .HERO_BLOBS_CONTAINER .blobs .blended .blob {
                 mix-blend-mode: color-dodge;
                 opacity: 0.7;
             }
-            .HERO_WRAP .blob1 {
+            .HERO_BLOBS_CONTAINER .blob1 {
                 width: 120%;
                 left: 22%;
                 top: 2%;
             }
-            .HERO_WRAP .blob2 {
+            .HERO_BLOBS_CONTAINER .blob2 {
                 width: 64%;
                 left: 0%;
                 top: 20%;
             }
-            .HERO_WRAP .blob3 {
+            .HERO_BLOBS_CONTAINER .blob3 {
                 width: 50%;
                 left: 75%;
                 top: 0%;
             }
+            @media screen and (max-width: 1080px) {
+                /* sve je izračunato u: blobs-responsive.xlsx; tab: blobs-inside */
+                .HERO_BLOBS_CONTAINER .blob1 {
+                    width: calc(84.24px + 39.00vw);
+                    left: calc(-12.64px + 9.75vw);
+                    top: calc(232.00px - 20.00vw);
+                }
+                .HERO_BLOBS_CONTAINER .blob2 {
+                    width: calc(23.17px + 22.82vw);
+                    left: calc(23.17px - 2.15vw);
+                    top: calc(340.00px - 16.67vw);
+                }
+                .HERO_BLOBS_CONTAINER .blob3 {
+                    width: calc(105.30px + 9.75vw);
+                    left: calc(-73.71px + 36.08vw);
+                    top: 0;
+                }
+            }
 
             .HERO_WRAP .HERO_BLOB_OUTSIDEBOX {
                 position: absolute;
-                right: 8rem;
-                bottom: 9rem;
-                width: 10rem;
-                height: 10rem;
-                
                 opacity: 0.95;
                 filter: drop-shadow(-15px 10px 25px rgba(150, 50, 0, 0.7));
+                
+                width: 10rem;
+                height: 10rem;
+            }
+            @media screen and (min-width: 1081px) {
+                /* sve je izračunato u: blobs-responsive.xlsx; tab: blobs-outside (1080-2560) */
+                .HERO_WRAP .HERO_BLOB_OUTSIDEBOX {
+                    width: 10rem;
+                    right: calc(-242.85px + 50.49vw);
+                    bottom: calc(53.62px + 5.41vw);
+                }
+            }
+            @media screen and (max-width: 1080px) {
+                /* sve je izračunato u: blobs-responsive.xlsx; tab: blobs-outside (360-1080) */
+                .HERO_WRAP .HERO_BLOB_OUTSIDEBOX {
+                    width: calc(86.40px + 7.00vw);
+                    right: calc(-135.00px + 40.50vw);
+                    bottom: calc(-56.00px + 15.56vw);
+                }
             }
             .HERO_WRAP .HERO_BLOB_OUTSIDEBOX .blob {
                 filter: drop-shadow(-5px 5px 10px rgba(130, 0, 0, 0.6));
@@ -131,15 +187,31 @@
 
             
             .HERO_GRID {
+                --HERO_GRID-padding: 1rem;
+                --HERO_GRID-column-gap: 2rem;
+
                 position: relative;
-                width: 100%;
+                width: calc(100% - 2 * var(--HERO_GRID-padding));
                 max-width: 800px;
-                margin: 15vh auto 0;
-                padding: 1rem;
+                margin: 15rem auto 0;
+                padding: var(--HERO_GRID-padding);
 
                 display: grid;
                 grid-template-columns: 12rem auto;
-                column-gap: 2rem;
+                column-gap: var(--HERO_GRID-column-gap);
+            }
+            @media screen and (max-width: 720px) {
+                .HERO_GRID {
+                    display: block;
+                    margin-top: 7rem;
+                }
+                .HERO_GRID-col1 {
+                    width: 12rem;
+                }
+                .HERO_GRID-col2 {
+                    width: calc(100% - 2rem);
+                    margin-top: var(--HERO_GRID-column-gap);
+                }
             }
 
             #logo {
@@ -293,61 +365,74 @@
                 font-weight: 900;
                 letter-spacing: 2px;
             }
+            @media screen and (max-width: 720px) {
+                .--rotator-words {
+                    display: block;
+                    position: relative;
+                }
+                .HERO_CONTENT a.button {
+                    margin-top: 5rem;
+                }
+            }
         </style>
     </head>
     <body>
         <div class="HERO_WRAP --SVGclip-wrap-cover">
             <div class="--SVGclip">
                 <div class="HERO_CONTENT --SVGclip-content">
-                    <div class="blobs">
-                        <div class="solid">
-                            <div class="blob blob1">
-                                <svg viewBox="0 0 150.1 178.7" xmlns="http://www.w3.org/2000/svg">
-                                    <!-- Blob CSS generator: https://www.blobmaker.app/ -->
-                                    <path fill="url(#blob1_gradient)" d="M65.7,15.1c18.8-7.2,41.2-5.7,56.6,5s23.4,30.6,32.2,48,18.2,32.3,22.1,50.4,2,39.3-9.1,52.8S136,190.8,118.4,189,86,178.1,71.5,171.3s-28.9-11-33.4-20.7,1-24.4-.9-41.5S25.9,72.9,28.8,55.4,46.9,22.2,65.7,15.1Z" transform="translate(-28.3 -10.7)" />
-                                    <defs>
-                                        <linearGradient id="blob1_gradient" x1="0%" y1="100%" x2="100%" y2="0%">
-                                            <stop offset="15%" stop-color="#b91d37" />
-                                            <stop offset="80%" stop-color="#ec9213" />
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
+                    <div class="HERO_BLOBS_CONTAINER">
+                        <div class="HERO_BLOBS_CONTAINER_INNER">
+                            <div class="blobs">
+                                <div class="solid">
+                                    <div class="blob blob1">
+                                        <svg viewBox="0 0 150.1 178.7" xmlns="http://www.w3.org/2000/svg">
+                                            <!-- Blob CSS generator: https://www.blobmaker.app/ -->
+                                            <path fill="url(#blob1_gradient)" d="M65.7,15.1c18.8-7.2,41.2-5.7,56.6,5s23.4,30.6,32.2,48,18.2,32.3,22.1,50.4,2,39.3-9.1,52.8S136,190.8,118.4,189,86,178.1,71.5,171.3s-28.9-11-33.4-20.7,1-24.4-.9-41.5S25.9,72.9,28.8,55.4,46.9,22.2,65.7,15.1Z" transform="translate(-28.3 -10.7)" />
+                                            <defs>
+                                                <linearGradient id="blob1_gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                                                    <stop offset="15%" stop-color="#b91d37" />
+                                                    <stop offset="80%" stop-color="#ec9213" />
+                                                </linearGradient>
+                                            </defs>
+                                        </svg>
+                                    </div>
+                                    <div class="blob blob2">
+                                        <svg viewBox="0 0 147.6 190.2" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill="url(#blob1_gradient)" d="M104.4,171.3c-6.1-9.4-8.3-19-23.7-31.8S36.2,110.4,28.5,90.6,33.9,47.3,53.7,30,99.4,1.9,121.9,6.7,163.7,32,170.5,53s1.4,42.6-.9,57.6-1.5,23.4.3,36.3,4.8,30.1-1.7,39.7-22.1,11-35,7.2S110.5,180.8,104.4,171.3Z" transform="translate(-26.2 -5.5)" />
+                                        </svg>
+                                    </div>
+                                    <div class="blob blob3">
+                                        <svg viewBox="0 0 135.7 188.7" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill="url(#blob1_gradient)" d="M38.8,117.1c-2.3-15-8.1-26.4-8.9-39.2s3.5-27.5,12.9-42.8S66.3,4.1,80.6,4.7,109,22.2,119.2,36.5s16.3,26,24.9,39.3,19.7,28.1,21.3,44.6-6.4,34.9-20,49.1S112.6,193.8,94,193.3s-36.8-11.7-45.3-26.8S41.2,132.3,38.8,117.1Z" transform="translate(-29.9 -4.6)" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="blended">
+                                    <div class="blob blob1">
+                                        <svg viewBox="0 0 150.1 178.7" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill="url(#blob1_gradient)" d="M65.7,15.1c18.8-7.2,41.2-5.7,56.6,5s23.4,30.6,32.2,48,18.2,32.3,22.1,50.4,2,39.3-9.1,52.8S136,190.8,118.4,189,86,178.1,71.5,171.3s-28.9-11-33.4-20.7,1-24.4-.9-41.5S25.9,72.9,28.8,55.4,46.9,22.2,65.7,15.1Z" transform="translate(-28.3 -10.7)" />
+                                        </svg>
+                                    </div>
+                                    <div class="blob blob2">
+                                        <svg viewBox="0 0 147.6 190.2" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill="url(#blob1_gradient)" d="M104.4,171.3c-6.1-9.4-8.3-19-23.7-31.8S36.2,110.4,28.5,90.6,33.9,47.3,53.7,30,99.4,1.9,121.9,6.7,163.7,32,170.5,53s1.4,42.6-.9,57.6-1.5,23.4.3,36.3,4.8,30.1-1.7,39.7-22.1,11-35,7.2S110.5,180.8,104.4,171.3Z" transform="translate(-26.2 -5.5)" />
+                                        </svg>
+                                    </div>
+                                    <div class="blob blob3">
+                                        <svg viewBox="0 0 135.7 188.7" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill="url(#blob4_gradient)" d="M38.8,117.1c-2.3-15-8.1-26.4-8.9-39.2s3.5-27.5,12.9-42.8S66.3,4.1,80.6,4.7,109,22.2,119.2,36.5s16.3,26,24.9,39.3,19.7,28.1,21.3,44.6-6.4,34.9-20,49.1S112.6,193.8,94,193.3s-36.8-11.7-45.3-26.8S41.2,132.3,38.8,117.1Z" transform="translate(-29.9 -4.6)" />
+                                            <defs>
+                                                <linearGradient id="blob4_gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                                                    <stop offset="35%" stop-color="#b91d37" />
+                                                    <stop offset="80%" stop-color="#ec9213" />
+                                                </linearGradient>
+                                            </defs>
+                                        </svg>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="blob blob2">
-                                <svg viewBox="0 0 147.6 190.2" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="url(#blob1_gradient)" d="M104.4,171.3c-6.1-9.4-8.3-19-23.7-31.8S36.2,110.4,28.5,90.6,33.9,47.3,53.7,30,99.4,1.9,121.9,6.7,163.7,32,170.5,53s1.4,42.6-.9,57.6-1.5,23.4.3,36.3,4.8,30.1-1.7,39.7-22.1,11-35,7.2S110.5,180.8,104.4,171.3Z" transform="translate(-26.2 -5.5)" />
-                                </svg>
-                            </div>
-                            <div class="blob blob3">
-                                <svg viewBox="0 0 135.7 188.7" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="url(#blob1_gradient)" d="M38.8,117.1c-2.3-15-8.1-26.4-8.9-39.2s3.5-27.5,12.9-42.8S66.3,4.1,80.6,4.7,109,22.2,119.2,36.5s16.3,26,24.9,39.3,19.7,28.1,21.3,44.6-6.4,34.9-20,49.1S112.6,193.8,94,193.3s-36.8-11.7-45.3-26.8S41.2,132.3,38.8,117.1Z" transform="translate(-29.9 -4.6)" />
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="blended">
-                            <div class="blob blob1">
-                                <svg viewBox="0 0 150.1 178.7" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="url(#blob1_gradient)" d="M65.7,15.1c18.8-7.2,41.2-5.7,56.6,5s23.4,30.6,32.2,48,18.2,32.3,22.1,50.4,2,39.3-9.1,52.8S136,190.8,118.4,189,86,178.1,71.5,171.3s-28.9-11-33.4-20.7,1-24.4-.9-41.5S25.9,72.9,28.8,55.4,46.9,22.2,65.7,15.1Z" transform="translate(-28.3 -10.7)" />
-                                </svg>
-                            </div>
-                            <div class="blob blob2">
-                                <svg viewBox="0 0 147.6 190.2" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="url(#blob1_gradient)" d="M104.4,171.3c-6.1-9.4-8.3-19-23.7-31.8S36.2,110.4,28.5,90.6,33.9,47.3,53.7,30,99.4,1.9,121.9,6.7,163.7,32,170.5,53s1.4,42.6-.9,57.6-1.5,23.4.3,36.3,4.8,30.1-1.7,39.7-22.1,11-35,7.2S110.5,180.8,104.4,171.3Z" transform="translate(-26.2 -5.5)" />
-                                </svg>
-                            </div>
-                            <div class="blob blob3">
-                                <svg viewBox="0 0 135.7 188.7" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill="url(#blob4_gradient)" d="M38.8,117.1c-2.3-15-8.1-26.4-8.9-39.2s3.5-27.5,12.9-42.8S66.3,4.1,80.6,4.7,109,22.2,119.2,36.5s16.3,26,24.9,39.3,19.7,28.1,21.3,44.6-6.4,34.9-20,49.1S112.6,193.8,94,193.3s-36.8-11.7-45.3-26.8S41.2,132.3,38.8,117.1Z" transform="translate(-29.9 -4.6)" />
-                                    <defs>
-                                        <linearGradient id="blob4_gradient" x1="0%" y1="100%" x2="100%" y2="0%">
-                                            <stop offset="35%" stop-color="#b91d37" />
-                                            <stop offset="80%" stop-color="#ec9213" />
-                                        </linearGradient>
-                                    </defs>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
+                        </div><!-- END .HERO_BLOBS_CONTAINER_INNER -->
+                    </div><!-- END .HERO_BLOBS_CONTAINER -->
                     
                     <div class="HERO_BLUEGRAD_OVERLAY"></div>
 
@@ -383,7 +468,7 @@
                         <div class="HERO_GRID-col2 slide-in-blurred-top">
                             <h1>
                                 <span style="font-family: 'EB Garamond', serif; font-weight: bold; font-size: 130%;">Egregii</span>
-                                 is a Web Design & Online Marketing Agency
+                                is a Web Design & Online Marketing Agency
                             </h1>
                             <div class="WORD_ROTATOR --rotator-wrap">
                                 <p>We create 

@@ -11,7 +11,6 @@ div[class*='--SVGclip-wrap'] {    /* Use: --SVGclip-wrap-cover / --SVGclip-wrap-
     height: var(--clipDIV-H);
 
     position: relative;
-    overflow: hidden;    /*WARNING: maknuti ovo? */
 }
 div.--SVGclip-wrap-cover {
     --clip-W: max(var(--clipDIV-W), var(--clip-minW));    /* final calculated width  of .SVGclip */
